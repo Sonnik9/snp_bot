@@ -1,5 +1,9 @@
 requests
+requests[socks]
+bs4
+lxml
 pytz
 pyinstaller
+joblib
 # requests>=2.25.1
 # pytz>=2021.1

@@ -6,62 +6,9 @@ import requests
 import base64
 from hashlib import sha256
 from urllib.parse import urlencode
-import pytz
+from init_params import TradingParams
 from log import Total_Logger
 import inspect
-
-file_path = 'settings.json'
-
-class TradingParams:
-    def __init__(self):
-        self.file_path = file_path
-        self.load_params()
-
-    def load_params(self):
-        # Загрузка и проверка параметров
-        with open(self.file_path, 'r', encoding='utf-8') as file:
-            data = json.load(file)
-
-            required_keys = [
-                'my_name', 'market_place_list', 'market_place_number',
-                'symbol', 'tz_location_str', 'is_sync', 'listing_data_time',
-                'start_delay_time_sec', 'buy_params', 'sales_share_ratio', 'keys'
-            ]
-
-            missing_keys = [key for key in required_keys if key not in data]
-            if missing_keys:
-                raise ValueError(f"Отсутствуют ключи в настройках: {', '.join(missing_keys)}")
-
-            # Присваивание параметров после проверки
-            self.__dict__.update(data)
-            self.tz_location = pytz.timezone(self.tz_location_str)
-
-    def display_params(self):
-        # Отображение основных параметров
-        print(f"\nName: {self.my_name}")
-        print(f"Selected Market Place: {self.market_place_list[self.market_place_number - 1]}")
-        print(f"Symbol: {self.symbol}")
-        print(f"Time Zone: {self.tz_location_str}")
-        print(f"Is Sync: {self.is_sync}")
-        print(f"Listing Time: {self.listing_data_time}")
-        print(f"Start Delay (sec): {self.start_delay_time_sec}\n")
-
-        # Обработка и вывод buy_params
-        buy_params_output = '\n\n'.join(
-            f"Buy Param #{i + 1}\n" + '\n'.join(f"{k}: {v}" for k, v in param.items())
-            for i, param in enumerate(self.buy_params)
-        )
-        print(f"Buy Params:\n{buy_params_output}\n")
-
-        # Обработка и вывод sales_share_ratio
-        sell_params_output = '\n\n'.join(
-            f"Sell Params #{i + 1}\n" + '\n'.join(f"{k}: {v}" for k, v in param.items())
-            for i, param in enumerate(self.sales_share_ratio)
-        )
-        print(f"Sell Params:\n{sell_params_output}\n")
-
-        # # Вывод ключей API
-        # print(f"API Keys: {self.keys}\n")
 
 # Класс для работы с API бирж
 class ORDERS_API(Total_Logger, TradingParams):

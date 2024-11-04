@@ -21,6 +21,4 @@ class Total_Logger():
                 line_number = caller_frame.f_lineno
                 exception_message = str(ex)
                 self.handle_exception(f"Error occurred in file '{file_name}', line {line_number}: {exception_message}")
-                # Optionally re-raise the exception if needed
-                # raise
         return wrapper
