@@ -136,7 +136,7 @@ class MAIN_LOGIC(BitgetParser):
                     continue
 
             except Exception as ex:
-                print(f"main.py, 121 line: {ex}")
+                print(f"main.py, 139 line: {ex}")
             
             # Задержка в конце каждой итерации
             time.sleep(60)
